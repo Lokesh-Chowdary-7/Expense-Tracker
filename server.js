@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
@@ -14,10 +14,10 @@ app.use(cookieParser());
 
 // Simple session setup
 app.use(session({
-    secret: 'smart-expense-tracker-secret-key-123',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } 
+    cookie: { secure: true } 
 }));
 
 // Serve static files from the 'public' directory
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 });
 
 // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/db1')
+mongoose.connect('process.env.MONGO_URI')
     .then(() => console.log('MongoDB connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
