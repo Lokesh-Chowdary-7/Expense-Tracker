@@ -13,11 +13,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Simple session setup
+app.set('trust proxy', 1); // ADD this line before app.use(session(...))
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true } 
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production', // secure only in production
+        sameSite: 'lax'
+    }
 }));
 
 // Serve static files from the 'public' directory
