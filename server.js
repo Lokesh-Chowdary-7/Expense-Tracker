@@ -188,7 +188,7 @@ app.delete('/api/expenses/:id', async (req, res) => {
     }
 });
 
-// Update/Edit an expense
+// Update/Edit an expenses
 app.put('/api/expenses/:id', async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).json({ success: false, message: 'Not logged in' });
@@ -201,7 +201,7 @@ app.put('/api/expenses/:id', async (req, res) => {
         );
         res.json({ success: true, expense });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error updating expense' });
+        res.status(500).json({ success: false, message: 'Error updating the expense' });
     }
 });
 
